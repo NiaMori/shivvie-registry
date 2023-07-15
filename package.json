@@ -1,0 +1,23 @@
+{
+  "name": "@niamori/shivvie.registry",
+  "version": "0.0.0",
+  "private": true,
+  "author": "NiaMori <Hellc5261@gmail.com> (https://github.com/niamori)",
+  "license": "MIT",
+  "homepage": "https://github.com/niamori/shivvie-registry",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@niamori/eslint-config": "^0.0.2",
+    "@niamori/shivvie.core": "^0.0.2",
+    "@types/node": "^20.4.2",
+    "@vitest/coverage-v8": "^0.33.0",
+    "@vitest/ui": "^0.33.0",
+    "eslint": "^8.45.0",
+    "tsup": "^7.1.0",
+    "vitest": "^0.33.0",
+    "zod": "^3.21.4",
+    "zx": "^7.2.3"
+  }
+}

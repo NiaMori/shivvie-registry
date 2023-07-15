@@ -1,0 +1,13 @@
+{
+  "name": "@{{scope}}/{{repo}}.{{name}}",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "author": "NiaMori <Hellc5261@gmail.com> (https://github.com/niamori)",
+  "license": "MIT",
+  "homepage": "https://github.com/{{scope}}/{{repo}}/pkg/{{name}}",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  }
+}
