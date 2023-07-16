@@ -5,6 +5,10 @@
   "author": "NiaMori <Hellc5261@gmail.com> (https://github.com/niamori)",
   "license": "MIT",
   "homepage": "https://github.com/niamori/shivvie-registry",
+  "keywords": [
+    "shivvie",
+    "shivvie-registry"
+  ],
   "scripts": {
     "lint": "eslint ."
   },
