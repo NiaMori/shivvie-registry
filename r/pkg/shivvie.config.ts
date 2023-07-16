@@ -28,28 +28,28 @@ export default defineShivvie({
 
     if (tsup) {
       yield a.shivvie({
-        from: 'j/tsup',
+        from: '@:r/tsup',
         to: 'pkg/{{name}}',
       })
     }
 
     if (node) {
       yield a.shivvie({
-        from: 'j/node',
+        from: '@:r/node',
         to: 'pkg/{{name}}',
       })
     }
 
     if (eslint) {
       yield a.shivvie({
-        from: 'j/eslint',
+        from: '@:r/eslint',
         to: 'pkg/{{name}}',
       })
     }
 
     if (vitest) {
       yield a.shivvie({
-        from: 'j/vitest',
+        from: '@:r/vitest',
         to: 'pkg/{{name}}',
       })
     }

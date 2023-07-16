@@ -19,7 +19,7 @@ export default defineShivvie({
     yield a.ni()
 
     yield a.shivvie({
-      from: 'j/pkg',
+      from: '@:r/pkg',
       to: '.',
       inputData: {
         scope: i.scope,
