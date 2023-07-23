@@ -1,5 +1,6 @@
 {
   "name": "@niamori/shivvie.registry",
+  "type": "module",
   "version": "0.0.0",
   "private": true,
   "author": "NiaMori <Hellc5261@gmail.com> (https://github.com/niamori)",

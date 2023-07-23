@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext"],
+
+    "module": "NodeNext",
+    "rootDir": ".",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
+    "customConditions": ["@niamori/shivvie.registry"],
+
+    "allowJs": false,
+
+    "noEmit": true,
+
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "preserveSymlinks": false,
+    "forceConsistentCasingInFileNames": true,
+    "verbatimModuleSyntax": true,
+
+    "strict": true,
+
+    "skipLibCheck": true
+  },
+
+  "include": ["r"]
+}
