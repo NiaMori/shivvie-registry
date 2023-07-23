@@ -16,6 +16,11 @@ export default defineShivvie({
       ],
     })
 
+    yield a.shivvie({
+      from: '@:r/pnpm',
+      to: '.',
+    })
+
     yield a.ni()
 
     yield a.shivvie({

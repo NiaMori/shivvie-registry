@@ -22,9 +22,9 @@ export default defineShivvie({
             require: './dist/esm/src/index.js',
           },
           './*': {
-            'dev:@niamori/shivvie.core': './src/*.js',
-            'import': './dist/esm/src/*.js',
-            'require': './dist/esm/src/*.js',
+            [`dev:${pkg.name}`]: './src/*.js',
+            import: './dist/esm/src/*.js',
+            require: './dist/esm/src/*.js',
           },
         }
         pkg.main ||= './dist/esm/src/index.js'

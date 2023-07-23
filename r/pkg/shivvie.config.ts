@@ -36,6 +36,13 @@ export default defineShivvie({
       },
     })
 
+    if (!isMonorepo) {
+      yield a.shivvie({
+        from: '@:r/pnpm',
+        to: targetDir,
+      })
+    }
+
     yield a.ni({ cwd: targetDir })
 
     const { features = {} } = i
@@ -55,16 +62,21 @@ export default defineShivvie({
       })
     }
 
+    if (vitest) {
+      yield a.shivvie({
+        from: '@:r/vitest',
+        to: targetDir,
+      })
+    }
+
     if (eslint) {
       yield a.shivvie({
         from: '@:r/eslint',
         to: targetDir,
       })
-    }
 
-    if (vitest) {
       yield a.shivvie({
-        from: '@:r/vitest',
+        from: '@:r/eslint/j/lint',
         to: targetDir,
       })
     }
