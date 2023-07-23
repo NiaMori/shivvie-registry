@@ -8,7 +8,7 @@ export default defineShivvie({
     name: z.string(),
 
     features: z.object({
-      tsup: z.boolean().optional(),
+      rollup: z.boolean().optional(),
       node: z.boolean().optional(),
       eslint: z.boolean().optional(),
       vitest: z.boolean().optional(),
@@ -39,11 +39,11 @@ export default defineShivvie({
     yield a.ni({ cwd: targetDir })
 
     const { features = {} } = i
-    const { tsup = true, node = true, eslint = true, vitest = true } = features
+    const { rollup = true, node = true, eslint = true, vitest = true } = features
 
-    if (tsup) {
+    if (rollup) {
       yield a.shivvie({
-        from: '@:r/tsup',
+        from: '@:r/rollup',
         to: targetDir,
       })
     }
