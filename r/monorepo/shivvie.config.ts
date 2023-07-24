@@ -13,7 +13,13 @@ export default defineShivvie({
       to: '.',
       ignore: [
         'node_modules',
+        '.gitignore.hbs',
       ],
+    })
+
+    yield a.render({
+      from: 't/.gitignore.hbs',
+      to: '.gitignore',
     })
 
     yield a.shivvie({
