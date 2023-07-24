@@ -24,6 +24,16 @@ export default defineShivvie({
     yield a.ni()
 
     yield a.shivvie({
+      from: '@:r/nx',
+      to: '.',
+    })
+
+    yield a.shivvie({
+      from: '@:r/monorepo/j/release',
+      to: '.',
+    })
+
+    yield a.shivvie({
       from: '@:r/pkg',
       to: '.',
       inputData: {
