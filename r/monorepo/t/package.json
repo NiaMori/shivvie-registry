@@ -5,15 +5,16 @@
   "author": "NiaMori <Hellc5261@gmail.com> (https://github.com/niamori)",
   "license": "MIT",
   "scripts": {
-    "dev": "pnpm m run --color --stream dev",
-    "build": "pnpm m run --color --stream build",
-    "lint": "pnpm m run --color --stream lint",
-    "test": "pnpm m run --color --stream test",
+    "dev": "nx run-many --target=dev --output-style=stream",
+    "build": "nx run-many --target=build",
+    "lint": "nx run-many --target=lint",
+    "test": "nx run-many --target=test",
     "bump": "bumpp package.json ./pkg/*/package.json --no-push --execute 'syncpack fix-mismatches --filter @niamori/shivvie.*'",
     "release": "pnpm build && pnpm bump && pnpm m exec npm publish"
   },
   "devDependencies": {
     "bumpp": "^9.1.1",
-    "syncpack": "^10.7.3"
+    "syncpack": "^10.7.3",
+    "nx": "16.5.5"
   }
 }
