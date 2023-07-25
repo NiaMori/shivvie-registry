@@ -1,8 +1,8 @@
 {
   "name": "{{pkg.name}}",
   "type": "module",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "author": "{{pkg.author}}",
   "license": "{{pkg.license}}"
 }
