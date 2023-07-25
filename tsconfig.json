@@ -6,19 +6,17 @@
     "module": "NodeNext",
     "rootDir": ".",
     "moduleResolution": "NodeNext",
-    "types": ["node"],
-    "customConditions": ["@niamori/shivvie.registry"],
 
     "allowJs": false,
 
     "noEmit": true,
 
     "isolatedModules": true,
+    "verbatimModuleSyntax": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "preserveSymlinks": false,
     "forceConsistentCasingInFileNames": true,
-    "verbatimModuleSyntax": true,
 
     "strict": true,
 
