@@ -43,6 +43,12 @@ export default defineShivvie({
         if (!tsconfig.include.includes('test')) {
           tsconfig.include.push('test')
         }
+
+        tsconfig.compilerOptions ||= {}
+        tsconfig.compilerOptions.types ||= []
+        if (!tsconfig.compilerOptions.types.includes('vitest/importMeta')) {
+          tsconfig.compilerOptions.types.push('vitest/importMeta')
+        }
       },
     })
   },

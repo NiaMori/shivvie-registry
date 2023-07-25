@@ -6,4 +6,8 @@ export default defineConfig({
       { find: '{{packageName}}', replacement: new URL('src', import.meta.url).pathname },
     ],
   },
+
+  test: {
+    includeSource: ['src/**/*.ts'],
+  },
 })
