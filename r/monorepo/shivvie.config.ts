@@ -35,7 +35,7 @@ export default defineShivvie({
     })
 
     yield a.shivvie({
-      from: '@:r/monorepo/j/release',
+      from: '@:r/release',
       to: '.',
     })
 
