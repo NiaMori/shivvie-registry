@@ -53,11 +53,6 @@ export default defineShivvie({
           }
         },
       })
-
-      yield a.shivvie({
-        from: '@:r/release',
-        to: '.',
-      })
     }
   },
 })
