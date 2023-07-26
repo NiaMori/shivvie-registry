@@ -27,6 +27,13 @@ export default defineShivvie({
       },
     })
 
+    if (!isMonorepo) {
+      yield a.shivvie({
+        from: '@:r/pnpm',
+        to: '.',
+      })
+    }
+
     const { publishing = false } = i.feat ?? {}
 
     if (publishing) {
@@ -46,11 +53,9 @@ export default defineShivvie({
           }
         },
       })
-    }
 
-    if (!isMonorepo) {
       yield a.shivvie({
-        from: '@:r/pnpm',
+        from: '@:r/release',
         to: '.',
       })
     }
