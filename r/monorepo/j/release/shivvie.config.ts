@@ -1,8 +1,6 @@
 import { defineShivvie } from '@niamori/shivvie.core'
 import { z } from 'zod'
 
-// import { $ } from 'zx'
-
 export default defineShivvie({
   input: z.object({}),
 
