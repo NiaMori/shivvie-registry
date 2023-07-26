@@ -20,7 +20,7 @@ export default defineShivvie({
       to: 'package.json',
       additionalData: {
         pkg: {
-          name: isMonorepo ? r('@{{scope}}/{{repo}}.{{name}}') : r('@{{scope}}/{{name}}'),
+          name: isMonorepo ? r('@{{{scope}}}/{{{repo}}}.{{{name}}}') : r('@{{{scope}}}/{{{name}}}'),
           author: 'NiaMori <Hellc5261@gmail.com> (https://github.com/niamori)',
           license: 'MIT',
         },
@@ -38,8 +38,8 @@ export default defineShivvie({
 
     if (publishing) {
       const homepageUrl = isMonorepo
-        ? r('https://github.com/{{scope}}/{{repo}}/pkg/{{name}}')
-        : r('https://github.com/{{scope}}/{{name}}')
+        ? r('https://github.com/{{{scope}}}/{{{repo}}}/pkg/{{{name}}}')
+        : r('https://github.com/{{{scope}}}/{{{name}}}')
 
       yield a.manipulate('package.json', {
         path: 'package.json',

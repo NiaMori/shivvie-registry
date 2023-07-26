@@ -21,11 +21,11 @@ export default defineShivvie({
       ? `pkg/${i.name}`
       : '.'
     const packageName = isMonorepo
-      ? r('@{{scope}}/{{repo}}.{{name}}')
-      : r('@{{scope}}/{{name}}')
+      ? r('@{{{scope}}}/{{{repo}}}.{{{name}}}')
+      : r('@{{{scope}}}/{{{name}}}')
     const homepageUrl = isMonorepo
-      ? r('https://github.com/{{scope}}/{{repo}}/pkg/{{name}}')
-      : r('https://github.com/{{scope}}/{{name}}')
+      ? r('https://github.com/{{{scope}}}/{{{repo}}}/pkg/{{{name}}}')
+      : r('https://github.com/{{{scope}}}/{{{name}}}')
 
     yield a.cascade({
       from: 't',
