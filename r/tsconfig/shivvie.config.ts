@@ -139,7 +139,7 @@ export default defineShivvie({
     jsx: z.boolean().optional(),
   }),
 
-  async *actions({ i, a, p }) {
+  async *actions({ i, a, p, u }) {
     const { bundle = false, dom = false, jsx = false } = i
 
     const packageName = R.pipe(
@@ -167,11 +167,11 @@ export default defineShivvie({
 
     yield a.ni({ names: ['typescript', '@types/node'], dev: true })
 
-    // TODO: add better way to directly write to file
-    yield a.zxFunction(async () => {
-      const tsconfigText = mimic(tsconfig, await fs.promises.readFile(p.fromSource('tsconfig.idol.json'), 'utf-8'))
+    const tsconfigText = mimic(tsconfig, await fs.promises.readFile(p.fromSource('tsconfig.idol.json'), 'utf-8'))
 
-      await fs.promises.writeFile(p.fromTarget('tsconfig.json'), tsconfigText)
+    yield a.render({
+      from: await u.temp.write('tsconfig.json', tsconfigText),
+      to: 'tsconfig.json',
     })
   },
 })
