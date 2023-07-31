@@ -23,6 +23,15 @@ export default defineShivvie({
       },
     })
 
+    yield a.manipulate('.gitignore', {
+      path: '.gitignore',
+      manipulator(ignores) {
+        if (!ignores.includes('/coverage')) {
+          ignores.push('/coverage')
+        }
+      },
+    })
+
     yield a.manipulate('package.json', {
       path: 'package.json',
       manipulator(pkg) {
