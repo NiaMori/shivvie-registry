@@ -25,6 +25,7 @@ export default defineShivvie({
 
     yield a.manipulate('.gitignore', {
       path: '.gitignore',
+      touch: true,
       manipulator(ignores) {
         if (!ignores.includes('/coverage')) {
           ignores.push('/coverage')
