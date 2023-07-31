@@ -7,7 +7,7 @@ import { type Draft, type Immutable, produce } from 'immer'
 import { defineShivvie } from '@niamori/shivvie.core'
 import { z } from 'zod'
 
-import { mimic } from '@niamori/json-manipulator/mimic'
+import { mimic } from '@niamori/manipulator.json/mimic'
 import { fs } from 'zx'
 
 interface TSConfig extends Immutable<TSConfigJSON> {}
