@@ -7,7 +7,7 @@ export default defineShivvie({
     repo: z.string(),
   }),
 
-  async *actions({ i, a }) {
+  async *actions({ i, a, u }) {
     yield a.cascade({
       from: 't',
       to: '.',
@@ -40,13 +40,18 @@ export default defineShivvie({
     })
 
     yield a.shivvie({
-      from: '@:r/pkg',
-      to: '.',
+      from: '@:r/pkg/j/lib',
+      to: 'pkg/core',
       inputData: {
         scope: i.scope,
         repo: i.repo,
         name: 'core',
       },
+    })
+
+    yield a.render({
+      from: await u.temp.write('index.ts', 'export const theAnswer = 42'),
+      to: 'pkg/core/src/index.ts',
     })
   },
 })
