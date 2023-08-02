@@ -28,7 +28,7 @@ export default defineShivvie({
     })
 
     if (!isMonorepo) {
-      yield a.shivvie({
+      yield a.shivvie<typeof import('@:r/pnpm')>({
         from: '@:r/pnpm',
         to: '.',
       })

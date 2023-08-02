@@ -22,24 +22,24 @@ export default defineShivvie({
       to: '.gitignore',
     })
 
-    yield a.shivvie({
+    yield a.shivvie<typeof import('@:r/pnpm')>({
       from: '@:r/pnpm',
       to: '.',
     })
 
     yield a.ni()
 
-    yield a.shivvie({
+    yield a.shivvie<typeof import('@:r/nx')>({
       from: '@:r/nx',
       to: '.',
     })
 
-    yield a.shivvie({
+    yield a.shivvie<typeof import('@:r/release')>({
       from: '@:r/release',
       to: '.',
     })
 
-    yield a.shivvie({
+    yield a.shivvie<typeof import('@:r/pkg/j/lib')>({
       from: '@:r/pkg/j/lib',
       to: 'pkg/core',
       inputData: {

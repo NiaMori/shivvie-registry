@@ -26,5 +26,5 @@
     "skipLibCheck": true
   },
 
-  "include": ["r"]
+  "include": ["r/**/shivvie.config.ts"]
 }
