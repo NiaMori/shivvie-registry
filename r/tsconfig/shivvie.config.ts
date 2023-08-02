@@ -60,16 +60,17 @@ const withModules = (props: {
   const { bundle = false, withing = R.identity } = props
 
   const newOptions = produce(options, (dr: Draft<ModulesOptions>) => {
-    dr.module = 'NodeNext'
     dr.rootDir = '.'
     dr.types = ['node']
 
     if (bundle) {
+      dr.module = 'ESNext'
       dr.moduleResolution = 'Bundler'
       dr.paths = {
-        '@/*': ['src/*'],
+        '@/*': ['./src/*'],
       }
     } else {
+      dr.module = 'NodeNext'
       dr.moduleResolution = 'NodeNext'
     }
   })
