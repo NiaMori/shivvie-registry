@@ -66,9 +66,6 @@ const withModules = (props: {
     if (bundle) {
       dr.module = 'ESNext'
       dr.moduleResolution = 'Bundler'
-      dr.paths = {
-        '@/*': ['./src/*'],
-      }
     } else {
       dr.module = 'NodeNext'
       dr.moduleResolution = 'NodeNext'
@@ -125,7 +122,7 @@ const withAbsoluteImports = (props: { packageName: string }) => (options: Compil
   return produce(options, (dr: Draft<ModulesOptions>) => {
     if (dr.moduleResolution === 'Bundler') {
       dr.paths = {
-        '@/*': ['src/*'],
+        '@/*': ['./src/*'],
       }
     } else if (dr.moduleResolution === 'NodeNext') {
       dr.customConditions = [`dev:${packageName}`]
