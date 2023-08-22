@@ -17,7 +17,7 @@ export default defineShivvie({
       manipulator: (pkg) => {
         pkg.scripts ||= {}
         pkg.scripts.build ||= 'nx run-many --target=build'
-        pkg.scripts.dev ||= 'nx run-many --target=dev --output-style=stream'
+        pkg.scripts.dev ||= 'nx run-many --target=dev --output-style=stream --parallel 42'
         pkg.scripts.lint ||= 'nx run-many --target=lint'
         pkg.scripts.test ||= 'nx run-many --target=test'
       },
