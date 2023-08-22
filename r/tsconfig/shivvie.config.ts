@@ -10,8 +10,8 @@ import { z } from 'zod'
 import { mimic } from '@niamori/manipulator.json/mimic'
 import { fs } from 'zx'
 
-interface TSConfig extends Immutable<TSConfigJSON> {}
-interface CompilerOptions extends Exclude<TSConfig['compilerOptions'], undefined> {}
+interface TSConfig extends Immutable<TSConfigJSON> { }
+interface CompilerOptions extends Exclude<TSConfig['compilerOptions'], undefined> { }
 type ProjectsOptions = Pick<CompilerOptions, 'incremental' | 'composite' | 'tsBuildInfoFile' | 'disableSourceOfProjectReferenceRedirect' | 'disableSolutionSearching' | 'disableReferencedProjectLoad'>
 type LanguageAndEnvironmentOptions = Pick<CompilerOptions, 'target' | 'lib' | 'jsx' | 'experimentalDecorators' | 'emitDecoratorMetadata' | 'jsxFactory' | 'jsxFragmentFactory' | 'jsxImportSource' | 'reactNamespace' | 'noLib' | 'useDefineForClassFields' | 'moduleDetection'>
 type ModulesOptions = Pick<CompilerOptions, 'module' | 'rootDir' | 'moduleResolution' | 'baseUrl' | 'paths' | 'rootDirs' | 'typeRoots' | 'types' | 'allowUmdGlobalAccess' | 'moduleSuffixes' | 'allowImportingTsExtensions' | 'resolvePackageJsonImports' | 'resolvePackageJsonExports' | 'customConditions' | 'resolveJsonModule' | 'allowArbitraryExtensions' | 'noResolve'>
@@ -54,16 +54,20 @@ const withLanguageAndEnvironment = (props: {
 }
 
 const withModules = (props: {
+  cjs?: boolean
   bundle?: boolean
   withing?: (options: CompilerOptions) => CompilerOptions
 } = {}) => (options: CompilerOptions): CompilerOptions => {
-  const { bundle = false, withing = R.identity } = props
+  const { cjs, bundle = false, withing = R.identity } = props
 
   const newOptions = produce(options, (dr: Draft<ModulesOptions>) => {
     dr.rootDir = '.'
     dr.types = ['node']
 
-    if (bundle) {
+    if (cjs) {
+      dr.module = 'CommonJS'
+      dr.moduleResolution = 'Node'
+    } else if (bundle) {
       dr.module = 'ESNext'
       dr.moduleResolution = 'Bundler'
     } else {
@@ -120,7 +124,7 @@ const withAbsoluteImports = (props: { packageName: string }) => (options: Compil
   const { packageName } = props
 
   return produce(options, (dr: Draft<ModulesOptions>) => {
-    if (dr.moduleResolution === 'Bundler') {
+    if (dr.moduleResolution === 'Bundler' || dr.moduleResolution === 'Node') {
       dr.paths = {
         '@/*': ['./src/*'],
       }
@@ -135,10 +139,11 @@ export default defineShivvie({
     bundle: z.boolean().optional(),
     dom: z.boolean().optional(),
     jsx: z.boolean().optional(),
+    cjs: z.boolean().optional(),
   }),
 
   async *actions({ i, a, p, u }) {
-    const { bundle = false, dom = false, jsx = false } = i
+    const { bundle = false, dom = false, jsx = false, cjs = false } = i
 
     const packageName = R.pipe(
       () => fs.readFileSync(p.fromTarget('package.json'), 'utf-8'),
@@ -153,7 +158,7 @@ export default defineShivvie({
         withing: R.pipe(
           withProjects(),
           withLanguageAndEnvironment({ dom, jsx }),
-          withModules({ bundle, withing: R.pipe(withAbsoluteImports({ packageName })) }),
+          withModules({ cjs, bundle, withing: R.pipe(withAbsoluteImports({ packageName })) }),
           withJavaScriptSupport(),
           withEmit(),
           withInteropConstraints(),
