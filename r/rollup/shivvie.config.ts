@@ -1,60 +1,81 @@
+import fs from 'node:fs'
 import { defineShivvie } from '@niamori/shivvie.core'
 import { z } from 'zod'
+import * as R from 'ramda'
 
 export default defineShivvie({
-  input: z.object({}),
+  input: z.object({
+    preset: z.enum(['esmLib', 'cjsApp']).default('esmLib'),
+  }),
 
-  async *actions({ a }) {
+  async *actions({ i, a, u, p }) {
+    const { preset } = i
+
     yield a.ni({ names: ['rollup', '@niamori/rollup-config'], dev: true })
 
+    const pkgJson = R.pipe(
+      () => fs.readFileSync(p.fromTarget('package.json'), 'utf-8'),
+      JSON.parse,
+      z.object({
+        type: z.enum(['module', 'commonjs']).optional().default('commonjs'),
+      }).parse,
+    )()
+
+    const rollupConfigSuffix = pkgJson.type === 'module' ? '.js' : '.mjs'
+    const rollupConfigName = `rollup.config${rollupConfigSuffix}`
+
     yield a.render({
-      from: 't/rollup.config.ts',
-      to: 'rollup.config.ts',
+      from: await u.temp.write(rollupConfigName, `import { ${preset} } from '@niamori/rollup-config/presets'\n\nexport default await ${preset}()\n`),
+      to: rollupConfigName,
     })
 
-    yield a.manipulate('package.json', {
-      path: 'package.json',
+    if (preset === 'cjsApp') {
+      yield a.manipulate('package.json', {
+        path: 'package.json',
 
-      manipulator(pkg) {
-        pkg.exports ||= {
-          '.': {
-            import: './dist/esm/src/index.js',
-            require: './dist/esm/src/index.js',
-          },
-          './*': {
-            [`dev:${pkg.name}`]: './src/*.js',
-            import: './dist/esm/src/*.js',
-            require: './dist/esm/src/*.js',
-          },
-        }
-        pkg.main ||= './dist/esm/src/index.js'
-        pkg.module ||= './dist/esm/src/index.js'
-        pkg.types ||= 'index.d.ts'
-        pkg.typesVersions ||= {
-          '*': {
-            '*': [
-              './dist/esm/src/*',
-            ],
-          },
-        }
+        manipulator(pkg) {
+          pkg.main ||= './dist/cjs/src/index.js'
 
-        pkg.files ||= ['dist']
+          pkg.scripts ||= {}
+          pkg.scripts.build ||= `rollup --config ${rollupConfigName}`
+          pkg.scripts.dev ||= `rollup --config ${rollupConfigName} --watch`
+        },
+      })
+    } else if (preset === 'esmLib') {
+      yield a.manipulate('package.json', {
+        path: 'package.json',
 
-        pkg.scripts ||= {}
-        pkg.scripts.build ||= 'rollup --config rollup.config.ts --configPlugin typescript'
-        pkg.scripts.dev ||= 'pnpm build --watch'
-      },
-    })
+        manipulator(pkg) {
+          pkg.exports ||= {
+            '.': {
+              import: './dist/esm/src/index.js',
+              require: './dist/esm/src/index.js',
+            },
+            './*': {
+              [`dev:${pkg.name}`]: './src/*.js',
+              import: './dist/esm/src/*.js',
+              require: './dist/esm/src/*.js',
+            },
+          }
+          pkg.main ||= './dist/esm/src/index.js'
+          pkg.module ||= './dist/esm/src/index.js'
+          pkg.types ||= 'index.d.ts'
+          pkg.typesVersions ||= {
+            '*': {
+              '*': [
+                './dist/esm/src/*',
+              ],
+            },
+          }
 
-    yield a.manipulate('tsconfig.json', {
-      path: 'tsconfig.json',
-      manipulator(tsconfig) {
-        tsconfig.include ||= []
-        if (!tsconfig.include.includes('rollup.config.ts')) {
-          tsconfig.include.push('rollup.config.ts')
-        }
-      },
-    })
+          pkg.files ||= ['dist']
+
+          pkg.scripts ||= {}
+          pkg.scripts.build ||= `rollup --config ${rollupConfigName}`
+          pkg.scripts.dev ||= `rollup --config ${rollupConfigName} --watch`
+        },
+      })
+    }
 
     yield a.manipulate('.gitignore', {
       path: '.gitignore',
