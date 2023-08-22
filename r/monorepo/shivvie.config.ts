@@ -39,8 +39,8 @@ export default defineShivvie({
       to: '.',
     })
 
-    yield a.shivvie<typeof import('@:r/pkg/j/lib')>({
-      from: '@:r/pkg/j/lib',
+    yield a.shivvie<typeof import('@:r/pkg/j/esmLib')>({
+      from: '@:r/pkg/j/esmLib',
       to: 'pkg/core',
       inputData: {
         scope: i.scope,
