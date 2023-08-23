@@ -5,9 +5,16 @@ export default defineShivvie({
   input: z.object({
     scope: z.string(),
     repo: z.string(),
+
+    feat: z.object({
+      core: z.boolean().optional(),
+    }).optional(),
   }),
 
   async *actions({ i, a, u }) {
+    const { feat = {} } = i
+    const { core = true } = feat
+
     yield a.cascade({
       from: 't',
       to: '.',
@@ -39,19 +46,21 @@ export default defineShivvie({
       to: '.',
     })
 
-    yield a.shivvie<typeof import('@:r/pkg/j/esmLib')>({
-      from: '@:r/pkg/j/esmLib',
-      to: 'pkg/core',
-      inputData: {
-        scope: i.scope,
-        repo: i.repo,
-        name: 'core',
-      },
-    })
+    if (core) {
+      yield a.shivvie<typeof import('@:r/pkg/j/esmLib')>({
+        from: '@:r/pkg/j/esmLib',
+        to: 'pkg/core',
+        inputData: {
+          scope: i.scope,
+          repo: i.repo,
+          name: 'core',
+        },
+      })
 
-    yield a.render({
-      from: await u.temp.write('index.ts', 'export const theAnswer = 42'),
-      to: 'pkg/core/src/index.ts',
-    })
+      yield a.render({
+        from: await u.temp.write('index.ts', 'export const theAnswer = 42'),
+        to: 'pkg/core/src/index.ts',
+      })
+    }
   },
 })
