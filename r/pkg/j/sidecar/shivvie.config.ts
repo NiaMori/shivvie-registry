@@ -23,8 +23,8 @@ export default defineShivvie({
       from: 't/src',
       to: './src',
     })
-    yield a.ni({ names: ['express', 'zod'] })
-    yield a.ni({ names: ['@types/express'], dev: true })
+
+    yield a.ni({ names: ['fastify', '@fastify/cors', '@fastify/websocket', 'zod', '@trpc/server'] })
 
     yield a.shivvie<typeof import('@:r/sea')>({
       from: '@:r/sea',

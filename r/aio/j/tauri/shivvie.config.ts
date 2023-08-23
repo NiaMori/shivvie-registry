@@ -14,6 +14,9 @@ export default defineShivvie({
       inputData: {
         scope: i.scope,
         repo: i.repo,
+        feat: {
+          core: false,
+        },
       },
     })
 
@@ -57,7 +60,23 @@ export default defineShivvie({
       },
     })
 
+    yield a.manipulate('package.json', {
+      path: 'pkg/frontend/package.json',
+      manipulator(pkg) {
+        pkg.dependencies ||= {}
+
+        pkg.dependencies[`@${i.scope}/${i.repo}.sidecar`] = 'workspace:*'
+      },
+    })
+
     yield a.ni()
+
+    yield a.ni({ names: ['@tauri-apps/api'], cwd: 'pkg/frontend' })
+    yield a.ni({ names: ['@trpc/client', '@trpc/server', 'zod'], cwd: 'pkg/frontend' })
+    yield a.render({
+      from: 't/pkg/frontend/src/misc/trpc.tsx',
+      to: 'pkg/frontend/src/misc/trpc.tsx',
+    })
 
     yield a.manipulate('json', {
       path: '.vscode/settings.json',
