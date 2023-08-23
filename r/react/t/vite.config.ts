@@ -3,6 +3,10 @@ import createReactPlugin from '@vitejs/plugin-react'
 import createPagesPlugin from 'vite-plugin-pages'
 
 export default defineConfig({
+  build: {
+    target: 'esnext',
+  },
+
   resolve: {
     alias: [
       { find: '@', replacement: new URL('src', import.meta.url).pathname },
