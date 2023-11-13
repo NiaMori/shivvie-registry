@@ -22,5 +22,14 @@ export default defineShivvie({
         pkg.scripts.test ||= 'nx run-many --target=test'
       },
     })
+
+    yield a.manipulate('.gitignore', {
+      path: '.gitignore',
+      manipulator: (gitignore) => {
+        if (!gitignore.includes('/.nx')) {
+          gitignore.push('/.nx')
+        }
+      },
+    })
   },
 })
