@@ -14,33 +14,33 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@fastify/cors": "^8.3.0",
+    "@fastify/cors": "^8.4.1",
     "@fastify/websocket": "^8.2.0",
     "@niamori/eslint-config": "^0.1.0",
     "@niamori/manipulator.json": "^0.2.4",
     "@niamori/rollup-config": "^0.1.5",
     "@niamori/shivvie.core": "^0.2.3",
-    "@tauri-apps/api": "^1.4.0",
-    "@trpc/client": "^10.37.1",
-    "@trpc/server": "^10.37.1",
-    "@types/ramda": "^0.29.3",
-    "@vitest/coverage-v8": "^0.34.2",
-    "@vitest/ui": "^0.34.2",
+    "@tauri-apps/api": "^1.5.1",
+    "@trpc/client": "^10.43.3",
+    "@trpc/server": "^10.43.3",
+    "@types/ramda": "^0.29.9",
+    "@vitest/coverage-v8": "^0.34.6",
+    "@vitest/ui": "^0.34.6",
     "eslint": "^8.53.0",
-    "fastify": "^4.21.0",
-    "immer": "^10.0.2",
-    "ramda": "^0.29.0",
-    "rollup": "^3.28.1",
+    "fastify": "^4.24.3",
+    "immer": "^10.0.3",
+    "ramda": "^0.29.1",
+    "rollup": "^4.4.1",
     "tempy": "^3.1.0",
     "tsup": "^7.2.0",
     "types-tsconfig": "^2.0.2",
     "ulid": "^2.3.0",
-    "vitest": "^0.34.2",
-    "zod": "^3.22.2",
+    "vitest": "^0.34.6",
+    "zod": "^3.22.4",
     "zx": "^7.2.3"
   },
   "devDependencies": {
-    "@types/node": "^20.5.3",
-    "typescript": "^5.1.6"
+    "@types/node": "^20.9.0",
+    "typescript": "^5.2.2"
   }
 }
