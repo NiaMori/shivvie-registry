@@ -20,7 +20,7 @@ export default defineShivvie({
       }).parse,
     )()
 
-    if (pkgJson.type == 'module') {
+    if (pkgJson.type === 'module') {
       yield a.render({
         from: 't/eslint.config.mjs',
         to: 'eslint.config.js',
