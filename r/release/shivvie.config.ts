@@ -10,25 +10,14 @@ export default defineShivvie({
     const isMonorepoRoot = await fs.promises.access(p.fromTarget('pnpm-workspace.yaml')).then(() => true).catch(() => false)
 
     if (isMonorepoRoot) {
-      yield a.ni({ names: ['bumpp', 'syncpack'], dev: true })
-
-      const pkgJson = R.pipe(
-        () => fs.readFileSync(p.fromTarget('package.json'), 'utf-8'),
-        JSON.parse,
-        z.object({
-          name: z.string(),
-        }).parse,
-      )()
-
-      const scope = pkgJson.name.split('/')[0].slice(1)
-      const repo = pkgJson.name.split('/')[1].split('.')[0]
+      yield a.ni({ names: ['bumpp'], dev: true })
 
       yield a.manipulate('package.json', {
         path: 'package.json',
         manipulator: (pkg) => {
           pkg.scripts ||= {}
-          pkg.scripts.bump ||= `bumpp package.json ./pkg/*/package.json --no-push --execute \'syncpack fix-mismatches --filter @${scope}/${repo}.*\'`
-          pkg.scripts.release ||= 'pnpm bump && pnpm build && pnpm m exec npm publish'
+          pkg.scripts.bump ||= `bumpp package.json ./pkg/*/package.json --no-push`
+          pkg.scripts.release ||= 'pnpm bump && pnpm build && pnpm m exec publish'
         },
       })
     } else {
@@ -39,7 +28,7 @@ export default defineShivvie({
         manipulator: (pkg) => {
           pkg.scripts ||= {}
           pkg.scripts.bump ||= 'bumpp --no-push'
-          pkg.scripts.release ||= 'pnpm bump && pnpm build && npm run publish'
+          pkg.scripts.release ||= 'pnpm bump && pnpm build && pnpm publish'
         },
       })
     }
