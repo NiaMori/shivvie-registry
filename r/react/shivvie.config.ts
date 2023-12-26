@@ -36,6 +36,25 @@ export default defineShivvie({
       ],
     })
 
+    yield a.manipulate('tsconfig.json', {
+      path: 'tsconfig.json',
+      manipulator: (tsconfig) => {
+        tsconfig.compilerOptions ||= {}
+        tsconfig.compilerOptions.types ||= []
+
+        for (const type of ['vite/client', 'vite-plugin-pages/client-react']) {
+          if (!tsconfig.compilerOptions.types.includes(type)) {
+            tsconfig.compilerOptions.types.push(type)
+          }
+        }
+
+        tsconfig.include ||= []
+        if (!tsconfig.include.includes('vite.config.ts')) {
+          tsconfig.include.push('vite.config.ts')
+        }
+      }
+    })
+
     yield a.manipulate('package.json', {
       path: 'package.json',
       manipulator: (pkg) => {
