@@ -1,3 +1,3 @@
-const { pleaseConfigESLintForMe } = require('@niamori/eslint-config')
-
-module.exports = pleaseConfigESLintForMe()
+module.exports = import('@niamori/eslint-config').then(({
+  pleaseConfigESLintForMe
+}) => pleaseConfigESLintForMe())
