@@ -131,7 +131,7 @@ const withAbsoluteImports = (props: { packageName: string }) => (options: Compil
     } else if (dr.moduleResolution === 'NodeNext') {
       dr.customConditions = [`dev:${packageName}`]
       dr.paths = {
-        [`${packageName}/*`]: [`./src/*`], // for vscode intellisense
+        [`${packageName}/*`]: [`./src/*.js`], // for vscode intellisense
       }
     }
   })
